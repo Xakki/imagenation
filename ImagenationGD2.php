@@ -48,6 +48,10 @@ class ImagenationGD2
             copy($InFile, $OutFile);
             return true;
         }
+        if ($imtype == 3) {
+            imagealphablending($thumb, false);
+            imagesavealpha($thumb, true);
+        }
 
         /*Открываем исходный рисунок*/
         if (!$source = self::_imagecreatefrom($InFile, $imtype)) { //открываем рисунок
@@ -61,6 +65,16 @@ class ImagenationGD2
         if (!($thumb2 = @imagecreatetruecolor($trueX, $trueY))) {
             throw new Exception('Cannot Initialize new GD image stream');
         }
+
+        if ($imtype == 3) {
+            imagealphablending($thumb2, false);
+            imagesavealpha($thumb2, true);
+//            imagealphablending($thumb2, false);
+//            $col=imagecolorallocatealpha($thumb2,255,255,255,127);
+//            imagefilledrectangle($thumb2,0,0,485, 500,$col);
+//            imagealphablending($thumb2,true);
+        }
+
 
         if (!imagecopyresampled($thumb2, $thumb, 0, 0, $WidthX / 2 - $trueX / 2, $HeightY / 2 - $trueY / 2, $trueX, $trueY, $trueX, $trueY)) {
             throw new Exception('Error imagecopyresampled');
