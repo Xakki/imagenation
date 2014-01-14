@@ -187,6 +187,28 @@ class Imagenation
         return true;
     }
 
+    /**************** VALIDATE ************************/
+
+    static function validImageTypeExt($file, $fileExt)
+    {
+        include_once(__DIR__ . '/ImagenationGD2.php');
+        if (!$c_type = ImagenationGD2::_get_type($file)) {
+            return true;
+        }
+        $fileExt = str_replace('jpeg','jpg', $fileExt);
+
+        $TrueExt = ImagenationGD2::_get_ext($c_type);
+        $TrueExt = str_replace('jpeg','jpg', $TrueExt);
+        $TrueExt = trim($TrueExt, '. ');
+
+
+        if($TrueExt!==$fileExt) {
+            return false;
+        }
+        return true;
+    }
+
+
     /*************** Helper function *********************/
 
     static function _is_image($file)

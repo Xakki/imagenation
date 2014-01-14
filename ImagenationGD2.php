@@ -13,7 +13,14 @@ class ImagenationGD2
     {
         $trueX = $WidthX;
         $trueY = $HeightY;
+
         Imagenation::_chmod($InFile);
+
+        /*Определяем тип рисунка*/
+        if (!$imtype = self::_get_type($InFile)) { // опред тип файла
+            throw new Exception('File is not image ' . $InFile);
+        }
+
         list($width_orig, $height_orig) = getimagesize($InFile);
 
         if (!$trueX and !$trueY) {
@@ -37,10 +44,7 @@ class ImagenationGD2
         if (!($thumb = @imagecreatetruecolor($WidthX, $HeightY))) {
             throw new Exception('Cannot Initialize new GD image stream');
         }
-        /*Определяем тип рисунка*/
-        if (!$imtype = self::_get_type($InFile)) { // опред тип файла
-            throw new Exception('File is not image ' . $InFile);
-        }
+
 
         /*Обработка только jpeg, gif, png*/
         if ($imtype > 3) {
@@ -309,13 +313,22 @@ class ImagenationGD2
         return ($res > 0 && $res < 4);
     }
 
+    /**
+     * @param $file string
+     * @return constants
+     */
     static function _get_type($file)
     {
         return exif_imagetype($file);
     }
 
-    static function _get_ext($file)
+    /**
+     * @param $imgType constants
+     * @return string
+     */
+    static function _get_ext($imgType)
     {
-        return image_type_to_extension($file);
+        return image_type_to_extension($imgType);
     }
+
 }
