@@ -31,16 +31,6 @@ class Imagenation
             return true;
         }
 
-        $crop = true;
-        if (!$WidthX) {
-            $WidthX = $HeightY;
-            $crop = false;
-        }
-        if (!$HeightY) {
-            $HeightY = $WidthX;
-            $crop = false;
-        }
-
         self::_chmod($InFile);
 
         if (self::$method == 'GD2') {
