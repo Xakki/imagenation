@@ -23,7 +23,9 @@ class Imagenation
      * @param $OutFile
      * @param $WidthX
      * @param $HeightY
+     *
      * @return bool
+     * @throws Exception
      */
     static function thumbnailImage($InFile, $OutFile, $WidthX, $HeightY)
     {
@@ -295,6 +297,32 @@ class Imagenation
         return $arr_rgb;
     }
 
+    /**
+     * Поворот изображений
+     * @param $path
+     * @param $angle
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public static function imgRotate($path, $angle)
+    {
+        self::_chmod($path);
+
+        if (self::$method == 'GD2') {
+            include_once(__DIR__ . '/ImagenationGD2.php');
+            return ImagenationGD2::imgRotate($path, $angle);
+        }
+        elseif (self::$method == 'Imagick') {
+            // TODO for Imagick
+        }
+        elseif (self::$method == 'ImageMagick') {
+            // TODO for ImageMagick
+        }
+        else {
+            throw new Exception('Use correct method');
+        }
+    }
     /*************** TOOLS *******************/
 
 

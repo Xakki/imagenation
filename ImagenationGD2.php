@@ -8,6 +8,34 @@
 class ImagenationGD2
 {
 
+
+    /**
+     * Поворот изображений
+     * @param $path
+     * @param $angle
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public static function imgRotate($path, $angle)
+    {
+        /*Определяем тип рисунка*/
+        $imtype = self::_get_type($path);
+        if (!$imtype) { // опред тип файла
+            throw new Exception('File is not image ' . $path);
+        }
+
+        $imgS = self::_imagecreatefrom($path);
+        if (!$imgS) {
+            throw new Exception('File ' . $path . ": Unable to open image file");
+        }
+
+        $imgS = imagerotate($imgS, $angle, 0);
+
+        $res = self::_image_to_file($imgS, $path, Imagenation::$quality, $imtype);
+
+        return $res;
+    }
     // Меняет размер обрезая
     static function thumbnailImage($InFile, $OutFile, $WidthX, $HeightY)
     {
@@ -290,6 +318,15 @@ class ImagenationGD2
         return $image;
     }
 
+    /**
+     * Сохраняем изображение в файл
+     * @param $im
+     * @param $file
+     * @param $q
+     * @param $imtype
+     *
+     * @return bool
+     */
     static function _image_to_file($im, $file, $q, $imtype)
     {
         if ($imtype == 1) {
