@@ -185,7 +185,7 @@ class Imagenation
     {
         include_once(__DIR__ . '/ImagenationGD2.php');
         if (!$c_type = ImagenationGD2::_get_type($file)) {
-            return true;
+            return false;
         }
         $fileExt = str_replace('jpeg','jpg', $fileExt);
 
