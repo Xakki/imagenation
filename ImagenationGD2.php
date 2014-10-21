@@ -356,7 +356,7 @@ class ImagenationGD2
      */
     static function _get_type($file)
     {
-        return exif_imagetype($file);
+        return @exif_imagetype($file);
     }
 
     /**
@@ -365,7 +365,7 @@ class ImagenationGD2
      */
     static function _get_ext($imgType)
     {
-        return image_type_to_extension($imgType);
+        return @image_type_to_extension($imgType);
     }
 
 }
